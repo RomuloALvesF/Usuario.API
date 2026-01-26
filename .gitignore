@@ -1,0 +1,18 @@
+## =========================
+## .NET / ASP.NET Core
+## =========================
+
+# Build results
+bin/
+obj/
+
+# Rider / VS Code / Visual Studio
+.vs/
+.vscode/
+.idea/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache*
