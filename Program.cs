@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<UserService>();//necessario para inicializar lembrar sempre
-builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<UserRepository>(); //necessario para inicializar lembrar sempre
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(

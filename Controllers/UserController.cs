@@ -9,26 +9,32 @@ namespace Usuario.API.Controllers
     {
         private readonly UserService _userService;
 
-        public UserController(UserService userService) 
+        public UserController(UserService userService)
         {
             _userService = userService;
         }
-
         [HttpPost]
         [Route("user")]
         public IActionResult Create([FromBody] UserRequestDto dto)
         {
-            var user = _userService.Create(dto);
+            try 
+            {
+                var user = _userService.Create(dto);
 
+                var request = new UserResponseDto
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Email = user.Email
+                };
 
-            var response = new UserResponseDto 
-            { 
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email
-            };
+                return Ok(request);
+            }
+            catch (ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
 
-            return Ok(response);
         }
     }
 }

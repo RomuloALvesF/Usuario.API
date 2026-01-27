@@ -1,12 +1,11 @@
 ﻿using Usuario.API.DTOs;
-using Usuario.API.Models;
 using Usuario.API.Repository;
+using Usuario.API.Models;
 
 namespace Usuario.API.Services
 {
     public class UserService
     {
-
         private readonly UserRepository _userRepository;
 
         public UserService(UserRepository userRepository)
@@ -16,7 +15,6 @@ namespace Usuario.API.Services
 
         public User Create(UserRequestDto dto)
         {
-
             if (string.IsNullOrWhiteSpace(dto.Name))
             {
                 throw new ArgumentNullException("Name cannot be empty!");
@@ -24,7 +22,7 @@ namespace Usuario.API.Services
 
             var user = new User(dto.Name, dto.Email, dto.Password);
 
-            _userRepository.Add(user);
+            _userRepository.Add(user); // lembre-se temos que persistir com o repository agora pois ele que conversa com o banco, não é mais o service!!!
 
             return user;
         }
