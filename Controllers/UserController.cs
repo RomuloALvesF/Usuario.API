@@ -1,6 +1,6 @@
-﻿using Usuario.API.DTOs;
+﻿using Microsoft.AspNetCore.Mvc;
+using Usuario.API.DTOs;
 using Usuario.API.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Usuario.API.Controllers
 {
@@ -9,7 +9,7 @@ namespace Usuario.API.Controllers
     {
         private readonly UserService _userService;
 
-        public UserController(UserService userService)
+        public UserController(UserService userService) 
         {
             _userService = userService;
         }
@@ -18,27 +18,17 @@ namespace Usuario.API.Controllers
         [Route("user")]
         public IActionResult Create([FromBody] UserRequestDto dto)
         {
+            var user = _userService.Create(dto);
 
 
-            try
-            {
-                var user = _userService.Create(dto.Name, dto.Email, dto.Password); 
+            var response = new UserResponseDto 
+            { 
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email
+            };
 
-
-                var response = new UserResponseDto()
-                {
-                    Id = user.Id,
-                    Name = user.Name,
-                    Email = user.Email,
-                };
-
-                return Ok(response);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
+            return Ok(response);
         }
     }
 }
