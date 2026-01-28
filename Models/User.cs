@@ -1,19 +1,14 @@
-﻿using Microsoft.Identity.Client;
-
-namespace Usuario.API.Models
+﻿namespace Usuario.API.Models
 {
     public class User
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; }
-
         public string Email { get; private set; }
-
         public string Password { get; private set; }
+        public DateTime Date {  get; private set; }
 
-        public DateTime Date { get; private set; }
-
-        public User () { }
+        public User() { }
 
         public User(string name, string email, string password)
         {

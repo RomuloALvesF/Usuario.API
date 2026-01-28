@@ -1,6 +1,6 @@
-﻿using Usuario.API.DTOs;
-using Usuario.API.Repository;
+﻿using Usuario.API.Repositories;
 using Usuario.API.Models;
+using Usuario.API.DTOs;
 
 namespace Usuario.API.Services
 {
@@ -15,16 +15,38 @@ namespace Usuario.API.Services
 
         public User Create(UserRequestDto dto)
         {
+
             if (string.IsNullOrWhiteSpace(dto.Name))
             {
-                throw new ArgumentNullException("Name cannot be empty!");
+                throw new ArgumentNullException("Name cannot ne empty!");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.Email))
+            {
+                throw new ArgumentNullException("Email cannot ne empty!");
             }
 
             var user = new User(dto.Name, dto.Email, dto.Password);
 
-            _userRepository.Add(user); // lembre-se temos que persistir com o repository agora pois ele que conversa com o banco, não é mais o service!!!
-
-            return user;
+            return _userRepository.Add(user);
         }
+
+        public User GetByEmail(string email)
+        {
+
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentNullException("Email cannot ne empty!");
+            }
+
+            return _userRepository.GetByEmail(email);
+        }
+
+        //service de Update apenas de passagem, mesmo sem regras é importante ter
+        public User Update(User user)
+        {
+            return _userRepository.Update(user);
+        }
+
     }
 }
