@@ -49,10 +49,20 @@ namespace Usuario.API.Controlles
             return Ok(response);
         }
 
-        [HttpPost]
-        public IActionResult Update(UserRequestDto dto)
+        [HttpPatch]
+        [Route("email/{email}")]
+        public IActionResult Update(string email, [FromBody] UserUpdateDto dto)
         {
-            //Lembrar preciso pegar o email antes reaproveitar o meu GetByEmail e reatribuir name já existente pelo novo name que vai vir Name.antigo = Name.novo
+            var user = _userService.Update(email, dto);
+
+            var response = new UserResponseDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.Name,
+            };
+
+            return Ok(response);
         }
     }
 }

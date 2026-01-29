@@ -1,6 +1,8 @@
 ﻿using Usuario.API.Repositories;
 using Usuario.API.Models;
 using Usuario.API.DTOs;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Usuario.API.Services
 {
@@ -42,9 +44,22 @@ namespace Usuario.API.Services
             return _userRepository.GetByEmail(email);
         }
 
-        //service de Update apenas de passagem, mesmo sem regras é importante ter
-        public User Update(User user)
+        public User Update(string email, UserUpdateDto dto)
         {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentNullException("Email cannot be empty!");
+            }
+
+            var user = _userRepository.GetByEmail(email);
+
+            if (user == null) throw new Exception("User not found!");
+
+            if (!string.IsNullOrWhiteSpace(dto.Name))
+            {
+                user.Name = dto.Name;
+            }
+
             return _userRepository.Update(user);
         }
 
