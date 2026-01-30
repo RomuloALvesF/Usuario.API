@@ -5,5 +5,9 @@ namespace Usuario.API.Interfaces
     {
         User Add(User user); //o tipo retorna o mesmo tipo, ou seja User retorna user
         User? GetByEmail(string email);
+
+        User? Update(User user);
+
+        bool Delete(User user);
     }
 }

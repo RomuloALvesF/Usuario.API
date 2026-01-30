@@ -35,5 +35,13 @@ namespace Usuario.API.Repositories
 
             return user;
         }
+
+        public bool Delete(User user)
+        {
+            _appDbContext.Remove(user);
+            _appDbContext.SaveChanges();
+
+            return true;
+        } 
     }
 }

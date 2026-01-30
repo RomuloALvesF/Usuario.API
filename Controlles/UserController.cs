@@ -50,7 +50,7 @@ namespace Usuario.API.Controlles
         }
 
         [HttpPatch]
-        [Route("email/{email}")]
+        [Route("update/{email}")]
         public IActionResult Update(string email, [FromBody] UserUpdateDto dto)
         {
             var user = _userService.Update(email, dto);
@@ -63,6 +63,18 @@ namespace Usuario.API.Controlles
             };
 
             return Ok(response);
+        }
+
+
+        [HttpDelete]
+        [Route("delete/{email}")]
+        public IActionResult Delete(string email)
+        {
+            //var user = _userService.Delete(email);
+
+            _userService.Delete(email);
+
+            return NoContent();
         }
     }
 }

@@ -55,12 +55,29 @@ namespace Usuario.API.Services
 
             if (user == null) throw new Exception("User not found!");
 
+            // PATCH: só atualiza o campo se ele vier preenchido
             if (!string.IsNullOrWhiteSpace(dto.Name))
             {
                 user.Name = dto.Name;
             }
 
             return _userRepository.Update(user);
+        }
+
+        public void Delete(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentNullException("Email cannot be empty!");
+            }
+
+            var user = _userRepository.GetByEmail(email);
+
+            if (user == null) throw new Exception("User not found!");
+
+
+            _userRepository.Delete(user);
+
         }
 
     }
